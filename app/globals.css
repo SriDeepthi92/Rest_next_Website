@@ -1,0 +1,287 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* fonts (if using Google imports, keep them) */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cardo:400i|Rubik:400,700&display=swap');
+
+:root {
+  --d: 700ms;
+  --e: cubic-bezier(0.19,1,0.22,1);
+  --font-sans: 'Rubik', sans-serif;
+  --font-serif: 'Cardo', serif;
+  --font-heading: 'Playfair Display', serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #111827;
+  background: #ffffff;
+}
+
+/* heading font helper */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* ensure nav links visible and no accidental overlap */
+nav a, nav button {
+  color: #111827;
+}
+
+/* adjust hero overlay and spacing so nav is clear */
+.hero-section {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+.hero-section .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+}
+
+/* === Navbar Styles === */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+  z-index: 1000;
+}
+
+.navbar.solid {
+  background-color: white; /* solid color after scroll */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar-links a {
+  color:black;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: white;
+}
+
+/* Add padding to the body so content doesn’t hide behind navbar */
+body {
+  padding-top: 70px;
+}
+
+/* Add the CodePen-like styles below existing globals.css content */
+
+/* grid wrapper */
+.cards-grid{
+  display: grid;
+  gap: 2.5rem;
+  padding: 0;            /* <-- remove this so cards align with .max-w-6xl px-6 */
+  margin: 0 auto;
+  max-width: 1200px;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  align-items: start;
+  background: #f8fafc;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* card base */
+.card{
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+  color: #fff;
+  background-color: transparent;
+  border-radius: 0.75rem;
+  box-shadow:
+    0 6px 18px rgba(17,24,39,0.06),
+    0 2px 6px rgba(17,24,39,0.04);
+  height: 420px; /* increased height so cards feel bigger */
+  text-decoration: none;
+}
+
+/* background image layer */
+.card::before{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform calc(var(--d) * 1.5) var(--e);
+  pointer-events: none;
+  transform: translateY(0);
+  z-index: 0;
+  border-radius: inherit; /* ensure image respects card radius */
+}
+
+/* gradient overlay */
+.card::after{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 200%;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0.12) 30%,
+    rgba(0,0,0,0.45) 60%,
+    rgba(0,0,0,0.8) 100%
+  );
+  transform: translateY(-50%);
+  transition: transform calc(var(--d) * 2) var(--e);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* set card background images — change paths if your assets differ */
+.cards-grid .card:nth-child(1)::before{ background-image: url('/rugs/feature1.png'); }
+.cards-grid .card:nth-child(2)::before{ background-image: url('/rugs/feature2.png'); }
+.cards-grid .card:nth-child(3)::before{ background-image: url('/rugs/feature3.png'); }
+.cards-grid .card:nth-child(4)::before{ background-image: url('/rugs/feature4.png'); }
+
+/* content block */
+.card .content{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  transition: transform var(--d) var(--e);
+  z-index: 1;
+  transform: translateY(calc(100% - 4.5rem));
+}
+
+/* hide non-title by default on hover-capable screens */
+.card .title{ font-size: 1.1rem; font-weight: 700; line-height: 1.2; text-align: center; }
+.card .copy{ font-family: var(--font-serif); font-size: 1rem; font-style: italic; margin-top: 0.5rem; opacity: 0; transform: translateY(1rem); transition: opacity var(--d) var(--e), transform var(--d) var(--e); text-align: center; color: #fff; }
+.card .btn{ cursor: pointer; margin-top: 1rem; padding: 0.5rem 1.25rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #fff; background: rgba(0,0,0,0.8); border: none; opacity: 0; transform: translateY(1rem); transition: opacity var(--d) var(--e), transform var(--d) var(--e); }
+
+/* hover interactions for pointer devices */
+@media (hover: hover) and (min-width: 600px){
+  .card::after{ transform: translateY(0); }
+  .card .content{ transform: translateY(calc(100% - 4.5rem)); }
+  .card:hover,
+  .card:focus-within{
+    align-items: center;
+  }
+  .card:hover::before{ transform: translateY(-4%); }
+  .card:hover::after{ transform: translateY(-50%); }
+  .card:hover .content{ transform: translateY(0); }
+  .card:hover .copy, .card:hover .btn{ opacity: 1; transform: translateY(0); transition-delay: calc(var(--d) / 8); }
+  .card:focus-within::before,
+  .card:focus-within::after,
+  .card:focus-within .content,
+  .card:focus-within .copy,
+  .card:focus-within .btn{ transition-duration: 0s; opacity: 1; transform: translateY(0); }
+}
+
+/* small-screen fallback: reveal all content */
+@media (max-width: 599px){
+  .card .content{ transform: translateY(0); }
+  .card .copy, .card .btn{ opacity: 1; transform: translateY(0); }
+}
+
+/* ensure links don't show default blue underline */
+.card, .card a { color: inherit; text-decoration: none; }
+
+/* Footer styles */
+.site-footer {
+  background: #ffffff;
+  color: #111827;               /* black text */
+  font-family: var(--font-sans);
+  padding-top: 36px;
+  padding-bottom: 0;
+}
+
+/* logo sizing (keeps same size as navbar) */
+.site-footer .footer-logo {
+  width: 80px !important;
+  height: auto !important;
+  display: block;
+}
+
+/* headings and links */
+.site-footer h6,
+.site-footer h4 {
+  color: #111827;
+}
+.site-footer .footer-links a {
+  color: #374151;               /* gray-700 */
+  text-decoration: none;
+}
+.site-footer .footer-links a:hover {
+  color: #b45309;               /* amber-700 on hover */
+}
+
+/* bottom bar: blend with main, subtle top divider */
+.site-footer-bottom {
+  background: transparent;
+  border-top: 1px solid rgba(17,24,39,0.06); /* subtle separator */
+}
+
+/* social icons: light background and dark icons (invert on hover) */
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(17,24,39,0.04); /* light gray */
+  color: #111827;
+  border-radius: 9999px;
+  transition: background .15s ease, transform .12s ease;
+  text-decoration: none;
+}
+.social-icon:hover {
+  background: #f59e0b;           /* amber */
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* responsive tweak: keep spacing consistent with page container */
+@media (max-width: 767px) {
+  .site-footer .max-w-7xl { padding-left: 1rem; padding-right: 1rem; }
+  .site-footer .footer-logo { width: 64px !important; }
+  .social-icon { width: 36px; height: 36px; }
+}
