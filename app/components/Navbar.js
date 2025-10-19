@@ -25,10 +25,10 @@ const Navbar = () => {
   <div className="navbar-container">
     <Link href="/">
       <Image
-        src="/logo.png"
+        src="/tewachi-logo.png"
         alt="My Logo"
-        width={90}   // square dimensions
-        height={90}   // square dimensions
+        width={150}   // square dimensions
+        height={150}   // square dimensions
       />
     </Link>
 

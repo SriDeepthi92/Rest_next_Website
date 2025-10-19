@@ -244,10 +244,10 @@ body {
 /* headings and links */
 .site-footer h6,
 .site-footer h4 {
-  color: #111827;
+  color: #111827 
 }
 .site-footer .footer-links a {
-  color: #374151;               /* gray-700 */
+  color: #ffffff;                /* gray-700 */
   text-decoration: none;
 }
 .site-footer .footer-links a:hover {
@@ -273,15 +273,168 @@ body {
   transition: background .15s ease, transform .12s ease;
   text-decoration: none;
 }
+
 .social-icon:hover {
-  background: #f59e0b;           /* amber */
+  background: #f59e0b;
   color: #ffffff;
-  transform: translateY(-2px);
 }
+
 
 /* responsive tweak: keep spacing consistent with page container */
 @media (max-width: 767px) {
   .site-footer .max-w-7xl { padding-left: 1rem; padding-right: 1rem; }
   .site-footer .footer-logo { width: 64px !important; }
   .social-icon { width: 36px; height: 36px; }
+}
+
+/* ---------- Footer styles appended (Bootstrap-like) ---------- */
+
+footer.mainfooter {
+  background: #ffffff; 
+  color: #111827;
+  margin-top: 100px;
+  padding-top: 2em;
+  padding-bottom: 1rem;
+}
+
+footer.mainfooter a {
+ 
+  font-size: 14px;
+  color: #111827;
+  transition-duration: 0.2s;
+  text-decoration: none;
+}
+
+footer.mainfooter a:hover {
+  color: #b45309;
+  text-decoration: none;
+}
+
+footer .copy {
+  color: #111827;
+  font-size: 12px;
+  padding: 10px;
+  border-top: 1px solid rgba(17,24,39,0.06); /* subtle divider */
+  margin-top: 1rem;
+}
+
+.footer-middle {
+  padding-top: 2em;
+  color: #111827 
+}
+
+/* Social icons */
+ul.social-network {
+  list-style: none;
+  display: inline-flex;
+  margin-left: 0 !important;
+  padding: 0;
+}
+
+ul.social-network li {
+  display: inline;
+  margin: 0 5px;
+}
+
+.social-network a.icoFacebook:hover {
+  background-color: #3B5998;
+}
+
+.social-network a.icoLinkedin:hover {
+  background-color: #007bb7;
+}
+
+.social-network a.icoFacebook:hover svg,
+.social-network a.icoLinkedin:hover svg {
+  color: #fff;
+}
+
+.social-circle li a {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  font-size: 15px;
+  background-color: #F9F9F9;
+  color: #595959;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+}
+
+.social-circle li a svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  margin: 0 auto;
+  stroke: currentColor;
+}
+
+.social-circle li a:hover {
+  transform: rotate(360deg);
+  transition: transform 0.2s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  footer.mainfooter {
+    margin-top: 60px;
+    padding-top: 1.5rem;
+  }
+  .social-circle li a { width: 34px; height: 34px; }
+}
+
+/* Force footer columns to lay out in a row on md+ */
+@media (min-width: 768px) {
+  /* target the footer grid container specifically */
+  .mainfooter .footer-middle .container > .grid,
+  .mainfooter .footer-middle .container > .row-grid,
+  .mainfooter .footer-middle .container > .row {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 2rem !important;
+    align-items: start !important;
+  }
+
+  /* ensure each column doesn't expand full width */
+  .mainfooter .footer-middle .container > .grid > div,
+  .mainfooter .footer-middle .container > .row > div {
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  /* remove any floats or flex rules that could force stacking */
+  .mainfooter .footer-middle .container .col-md-3,
+  .mainfooter .footer-middle .container .col-sm-6 {
+    float: none !important;
+    display: block !important;
+  }
+}
+
+/* fallback to stacked on small screens */
+@media (max-width: 767px) {
+  .mainfooter .footer-middle .container > .grid {
+    display: block !important;
+  }
+}
+
+/* small visual polish */
+.mainfooter .footer-pad ul { margin: 0; padding-left: 2.5rem; }
+
+.mainfooter .footer-pad h4 { margin: 10px; padding-left: 2rem; }
+
+/* Ensure there is padding above Heading 1 in the footer */
+.mainfooter .footer-middle .container .grid > div:first-child,
+.mainfooter .footer-middle .container > .grid > div:first-child {
+  padding-top: 4rem !important; /* adjust value as needed (e.g. 2.5rem) */
+}
+
+/* If you only want padding on small screens and remove on md+ */
+@media (min-width: 768px) {
+  .mainfooter .footer-middle .container .grid > div:first-child {
+    padding-top: 0 !important;
+  }
 }
